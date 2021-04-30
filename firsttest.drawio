@@ -1,20 +1,60 @@
-<mxfile host="app.diagrams.net" modified="2021-04-13T04:06:10.490Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36 Edg/89.0.774.75" etag="T6mJrGuBT2GhwrVhmWZt" version="14.5.10" type="github">
+<mxfile host="app.diagrams.net" modified="2021-04-30T07:07:51.048Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36" etag="D_u58pmEwSH8sfaP0EOY" version="14.6.9" type="github">
   <diagram id="eQVVE33Jv_LMTThVe1AR" name="Page-1">
-    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1038" dy="580" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="3wN7_YxLo-SRgz3u-_jh-1" value="hello" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="80" y="270" width="120" height="60" as="geometry" />
+        <mxCell id="_S5MrxZ2PgfGh_rQurS7-11" value="POS 단말기 서버" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="40" y="520" width="590" height="290" as="geometry" />
         </mxCell>
-        <mxCell id="3wN7_YxLo-SRgz3u-_jh-2" value="world" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
-          <mxGeometry x="100" y="420" width="80" height="80" as="geometry" />
+        <mxCell id="_S5MrxZ2PgfGh_rQurS7-1" value="주문 서비스" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="580" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="3wN7_YxLo-SRgz3u-_jh-3" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="3wN7_YxLo-SRgz3u-_jh-1" target="3wN7_YxLo-SRgz3u-_jh-2">
+        <mxCell id="_S5MrxZ2PgfGh_rQurS7-2" value="알림 서비스" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="454" y="580" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="_S5MrxZ2PgfGh_rQurS7-3" value="" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/mscae/Docker.svg;" vertex="1" parent="1">
+          <mxGeometry x="420" y="560" width="50" height="41" as="geometry" />
+        </mxCell>
+        <mxCell id="_S5MrxZ2PgfGh_rQurS7-4" value="" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/mscae/Docker.svg;" vertex="1" parent="1">
+          <mxGeometry x="90" y="560" width="50" height="41" as="geometry" />
+        </mxCell>
+        <mxCell id="_S5MrxZ2PgfGh_rQurS7-7" value="" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/mscae/Docker.svg;" vertex="1" parent="1">
+          <mxGeometry x="120" y="670" width="50" height="41" as="geometry" />
+        </mxCell>
+        <mxCell id="_S5MrxZ2PgfGh_rQurS7-8" value="" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/mscae/Docker.svg;" vertex="1" parent="1">
+          <mxGeometry x="450" y="670" width="50" height="41" as="geometry" />
+        </mxCell>
+        <mxCell id="_S5MrxZ2PgfGh_rQurS7-9" value="" style="endArrow=classic;startArrow=classic;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" target="_S5MrxZ2PgfGh_rQurS7-2">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="390" y="430" as="sourcePoint" />
-            <mxPoint x="440" y="380" as="targetPoint" />
+            <mxPoint x="514" y="690" as="sourcePoint" />
+            <mxPoint x="540" y="570" as="targetPoint" />
           </mxGeometry>
+        </mxCell>
+        <mxCell id="_S5MrxZ2PgfGh_rQurS7-10" value="" style="endArrow=classic;startArrow=classic;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" target="_S5MrxZ2PgfGh_rQurS7-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="180" y="690" as="sourcePoint" />
+            <mxPoint x="414" y="650" as="targetPoint" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_S5MrxZ2PgfGh_rQurS7-12" value="" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/azure2/databases/Azure_Database_MySQL_Server.svg;" vertex="1" parent="1">
+          <mxGeometry x="156" y="690" width="48" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="_S5MrxZ2PgfGh_rQurS7-13" value="" style="aspect=fixed;html=1;points=[];align=center;image;fontSize=12;image=img/lib/azure2/databases/Azure_Database_MySQL_Server.svg;" vertex="1" parent="1">
+          <mxGeometry x="490" y="690" width="48" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="_S5MrxZ2PgfGh_rQurS7-16" value="" style="points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;gradientColor=#945DF2;gradientDirection=north;fillColor=#5A30B5;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.managed_streaming_for_kafka;" vertex="1" parent="1">
+          <mxGeometry x="318" y="677" width="34" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="_S5MrxZ2PgfGh_rQurS7-18" value="" style="endArrow=classic;startArrow=classic;html=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="240" y="721.5" as="sourcePoint" />
+            <mxPoint x="430" y="721.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_S5MrxZ2PgfGh_rQurS7-20" value="Kafka" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="310" y="655" width="50" height="20" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
