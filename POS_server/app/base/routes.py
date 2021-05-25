@@ -135,6 +135,23 @@ def seller_register():
     return render_template('accounts/check.html', userinfo = session[constants.PROFILE_KEY])
 
 
+# Data Transfer Between Android & Web Server
+@blueprint.route('/android')
+def android():
+    data = {
+        'todo1': {
+            "task": "exercise"
+        },
+        'todo2': {
+            "task": "eat delivery food"
+        },
+        'todo3': {
+            "task": "watch movie"
+        }
+    }
+
+    return data
+
 ## Errors
 
 @login_manager.unauthorized_handler
