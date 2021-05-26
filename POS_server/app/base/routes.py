@@ -136,11 +136,10 @@ def seller_register():
 
 
 # Data Transfer Between Android & Web Server
-@blueprint.route('/android', methods=['POST'])
-def android():
+@blueprint.route('/android2', methods=['POST'])
+def android2():
     received_data = request.get_json()
-    if received_data:
-        return jsonify(received_data)
+    return jsonify(received_data)
 
 ## Errors
 
