@@ -10,7 +10,7 @@ from app.base import blueprint
 from app.base.models import User
 
 from functools import wraps
-import json
+import json, pymysql
 from app.base import constants
 from os import environ as env
 from werkzeug.exceptions import HTTPException
@@ -54,6 +54,13 @@ auth0 = oauth.register(
     },
 )
 
+config = {
+    'host': '172.17.0.2',
+    'port': 3306,
+    'user': 'root',
+    'database': 'mydb',
+    'charset': 'utf8'
+}
 
 def requires_auth(f):
     @wraps(f)
@@ -139,7 +146,37 @@ def seller_register():
 @blueprint.route('/android', methods=['POST'])
 def android():
     received_data = request.form
-    print(received_data)
+    
+    data_dict = dict(received_data)
+    data_dict['userID'] = int(data_dict['userID'])
+    data_dict['quantity'] = int(data_dict['quantity'])
+    print('data_dict : ', data_dict)
+    
+    data_list = []
+    data_list.append(data_dict)
+    print('data_list : ', data_list)
+
+    conn = pymysql.connect(**config)
+    cursor = conn.cursor()
+    
+    # dictioonary 하나씩 꺼내서 정보 저장에 사용
+    insert_data = data_list.pop(0)
+
+    # 회원 정보 먼저 저장 - 이미 있으면 저장 안함
+    userinfo_sql = '''INSERT IGNORE INTO user_info(user_id) VALUES(%s)'''
+    cursor.execute(userinfo_sql, [insert_data['userID']])
+    conn.commit()
+    
+    getuserinfo_sql = '''SELECT userinfo_no FROM user_info WHERE user_id=%s'''
+    cursor.execute(getuserinfo_sql, [insert_data['userID']])
+    userinfo_number = cursor.fetchone()
+    print('userinfo_number : ', userinfo_number, type(userinfo_number))
+    
+    orderinfo_sql = '''INSERT INTO order_info(userinfo_no, name, quantity, state) VALUES(%s, %s, %s, %s)'''
+    cursor.execute(orderinfo_sql, [userinfo_number, insert_data['name'], insert_data['quantity'], insert_data['state']])
+    conn.commit()
+
+
     return jsonify(received_data)
 
 ## Errors

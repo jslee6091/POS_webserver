@@ -1,27 +1,43 @@
 version: '3'
 services:
-  appseed-app:
+  pos_web:
     restart: always
     env_file: .env
-    build: .
+    image: jslee6091/pos_web
     ports:
       - "5005:5005"
     networks:
-      - db_network
-      - web_network
-  nginx:
-    restart: always
-    image: "nginx:latest"
+      my-network:
+        ipv4_address: 172.17.0.3
+    depends_on:
+      mysql:
+        condition: service_healthy
+  mysql:
+    image: mysql:5.7
     ports:
-      - "85:85"
+      - 13306:3306
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD : "true"
+      MYSQL_DATABASE : mydb
+      LC_ALL: C.UTF-8
     volumes:
-      - ./nginx:/etc/nginx/conf.d
+      - ./mysq_data:/var/lib/mysql
     networks:
-      - web_network
-    depends_on: 
-      - appseed-app
+      my-network:
+        ipv4_address: 172.17.0.2
+    healthcheck:
+      test: "exit 0"
+  # nginx:
+  #   restart: always
+  #   image: "nginx:latest"
+  #   ports:
+  #     - "85:85"
+  #   volumes:
+  #     - ./nginx:/etc/nginx/conf.d
+  #   networks:
+  #     - web_network
+  #   depends_on: 
+  #     - appseed-app
 networks:
-  db_network:
-    driver: bridge
-  web_network:
-    driver: bridge
+  my-network:
+    name: project_network
