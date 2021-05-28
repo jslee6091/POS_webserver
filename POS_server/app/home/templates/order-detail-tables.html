@@ -11,27 +11,23 @@
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Order Table</h4>
-                  <p class="card-category"> 고객의 회원 정보 Table</p>
+                  <h4 class="card-title ">Order Detail Table</h4>
+                  <p class="card-category">{{ user_number }}번 고객님의 주문 상세 정보 Table</p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
                     <table class="table">
                       <thead class=" text-primary">
                         <th>No</th>
-                        <th>User Info</th>
-                        <th>Order Detail</th>
+                        <th>Menu</th>
+                        <th>Quantity</th>
                       </thead>
                       <tbody>
-                        {% for idx, datas in user_data %}
+                        {% for idx, datas in order_data %}
                         <tr>
                           <td class="text-primary">{{ idx }}</td>
                           <td>{{ datas[0] }}</td>
-                          <td>
-                            <form method="post" action="order-detail-tables">
-                              <input type="submit" name="num" value= "{{ datas[0] }}">
-                            </form>
-                          </td>
+                          <td>{{ datas[1] }}</td>
                         </tr>
                         {% endfor %}
                       </tbody>

@@ -15,18 +15,9 @@
               <div class="login-box auth0-box before">
                 <img src="https://i.cloudup.com/StzWWrY34s.png" />
                 
-                {% if userinfo['category'] == 'user' %}
-                <h2>This page can access only for sellers</h2>
-                <a id="qsLoginBtn" class="btn btn-primary btn-lg btn-login btn-block" href="/index">홈페이지 바로가기</a>
-                
-                {% elif userinfo['category'] == 'seller' %}
-                <h2>This page can access only for users</h2>
-                <a id="qsLoginBtn" class="btn btn-primary btn-lg btn-login btn-block" href="/index">홈페이지 바로가기</a>
-                
-                {% else %}
                 <h2>You need to Log In</h2>
                 <a id="qsLoginBtn" class="btn btn-primary btn-lg btn-login btn-block" href="/login">로그인</a>
-                {% endif %}              
+                              
               </div>
             </div>
         </div>

@@ -55,9 +55,10 @@ auth0 = oauth.register(
 )
 
 config = {
-    'host': '172.17.0.3',
+    'host': '127.0.0.1',
     'port': 3306,
     'user': 'root',
+    'password': 'mysql',
     'database': 'mydb',
     'charset': 'utf8'
 }
@@ -69,25 +70,6 @@ def requires_auth(f):
             return render_template('accounts/requires.html')
         return f(*args, **kwargs)
     
-    return decorated
-
-def requires_auth_user(f):
-    @wraps(f)
-    def decorated(*args, **kwargs):
-        if session[constants.PROFILE_KEY]['category'] != 'user':
-            return render_template('accounts/requires.html', userinfo=session[constants.PROFILE_KEY])
-        return f(*args, **kwargs)
-
-    return decorated
-
-
-def requires_auth_seller(f):
-    @wraps(f)
-    def decorated(*args, **kwargs):
-        if session[constants.PROFILE_KEY]['category'] != 'seller':
-            return render_template('accounts/requires.html', userinfo=session[constants.PROFILE_KEY])
-        return f(*args, **kwargs)
-
     return decorated
 
 
@@ -125,21 +107,8 @@ def logout():
 
 @blueprint.route('/dashboard')
 def dashboard():
-    userinfo_pretty=json.dumps(session[constants.JWT_PAYLOAD], indent=4)
     return render_template('accounts/dashboard.html',
                            userinfo=session[constants.PROFILE_KEY])
-
-
-@blueprint.route('/user_register')
-def user_register():
-    session[constants.PROFILE_KEY]['category'] = 'user'
-    return render_template('accounts/check.html', userinfo = session[constants.PROFILE_KEY])
-
-
-@blueprint.route('/seller_register')
-def seller_register():
-    session[constants.PROFILE_KEY]['category'] = 'seller'
-    return render_template('accounts/check.html', userinfo = session[constants.PROFILE_KEY])
 
 
 # Data Transfer Between Android & Web Server
