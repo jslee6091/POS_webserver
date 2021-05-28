@@ -55,7 +55,7 @@ auth0 = oauth.register(
 )
 
 config = {
-    'host': '172.17.0.2',
+    'host': '172.17.0.3',
     'port': 3306,
     'user': 'root',
     'database': 'mydb',
@@ -146,38 +146,35 @@ def seller_register():
 @blueprint.route('/android', methods=['POST'])
 def android():
     received_data = request.form
+    received_json = json.dumps(received_data)
+    data_json = json.loads(received_json)
     
-    data_dict = dict(received_data)
+    data_dict = dict(data_json)
     data_dict['userID'] = int(data_dict['userID'])
     data_dict['quantity'] = int(data_dict['quantity'])
     print('data_dict : ', data_dict)
     
-    data_list = []
-    data_list.append(data_dict)
-    print('data_list : ', data_list)
-
     conn = pymysql.connect(**config)
     cursor = conn.cursor()
     
-    # dictioonary 하나씩 꺼내서 정보 저장에 사용
-    insert_data = data_list.pop(0)
-
+    
     # 회원 정보 먼저 저장 - 이미 있으면 저장 안함
     userinfo_sql = '''INSERT IGNORE INTO user_info(user_id) VALUES(%s)'''
-    cursor.execute(userinfo_sql, [insert_data['userID']])
+    cursor.execute(userinfo_sql, [data_dict['userID']])
     conn.commit()
+    print('============userinfo inserted!==========')
     
     getuserinfo_sql = '''SELECT userinfo_no FROM user_info WHERE user_id=%s'''
-    cursor.execute(getuserinfo_sql, [insert_data['userID']])
+    cursor.execute(getuserinfo_sql, [data_dict['userID']])
     userinfo_number = cursor.fetchone()
     print('userinfo_number : ', userinfo_number, type(userinfo_number))
     
     orderinfo_sql = '''INSERT INTO order_info(userinfo_no, name, quantity, state) VALUES(%s, %s, %s, %s)'''
-    cursor.execute(orderinfo_sql, [userinfo_number, insert_data['name'], insert_data['quantity'], insert_data['state']])
+    cursor.execute(orderinfo_sql, [userinfo_number, data_dict['menu'], data_dict['quantity'], data_dict['state']])
     conn.commit()
+    
 
-
-    return jsonify(received_data)
+    return jsonify(data_dict)
 
 ## Errors
 
