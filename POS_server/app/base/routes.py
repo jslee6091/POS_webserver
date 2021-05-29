@@ -55,10 +55,9 @@ auth0 = oauth.register(
 )
 
 config = {
-    'host': '127.0.0.1',
+    'host': '172.17.0.3',
     'port': 3306,
     'user': 'root',
-    'password': 'mysql',
     'database': 'mydb',
     'charset': 'utf8'
 }
@@ -133,15 +132,23 @@ def android():
     conn.commit()
     print('============userinfo inserted!==========')
     
-    getuserinfo_sql = '''SELECT userinfo_no FROM user_info WHERE user_id=%s'''
-    cursor.execute(getuserinfo_sql, [data_dict['userID']])
-    userinfo_number = cursor.fetchone()
-    print('userinfo_number : ', userinfo_number, type(userinfo_number))
-    
-    orderinfo_sql = '''INSERT INTO order_info(userinfo_no, name, quantity, state) VALUES(%s, %s, %s, %s)'''
-    cursor.execute(orderinfo_sql, [userinfo_number, data_dict['menu'], data_dict['quantity'], data_dict['state']])
+    # 회원의 주문 정보 저장 - 현재 주문 내용이 있는 회원만 저장
+    # user_id와 state 저장
+    orderinfo_sql = '''INSERT IGNORE INTO order_info(user_id, state) VALUES(%s, %s)'''
+    cursor.execute(orderinfo_sql, [data_dict['userID'], data_dict['state']])
     conn.commit()
     
+    # 회원의 주문 상세 내역 저장을 위한 정보 추출
+    # user_id를 이용한 order_id 추출
+    getorderinfo_sql = '''SELECT order_id FROM order_info WHERE user_id=%s'''
+    cursor.execute(getorderinfo_sql, [data_dict['userID']])
+    orderID = cursor.fetchone()
+    print('orderID : ', orderID, type(orderID))
+
+    # 회원의 주문 상세 내역 저장
+    orderdetail_info_sql = '''INSERT INTO order_detail_info(order_id, menu, quantity) VALUES(%s, %s, %s)'''
+    cursor.execute(orderdetail_info_sql, [orderID, data_dict['name'], data_dict['quantity']])
+    conn.commit()
 
     return jsonify(data_dict)
 

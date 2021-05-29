@@ -8,10 +8,17 @@ CREATE TABLE if NOT EXISTS user_info(
 
 CREATE TABLE if NOT EXISTS order_info(
     order_id INT(20) AUTO_INCREMENT,
-    userinfo_no INT(20),
-    name VARCHAR(20),
-    quantity INT(10),
+    user_id INT(20) UNIQUE KEY,
     state VARCHAR(20),
     PRIMARY KEY (order_id),
-    FOREIGN KEY (userinfo_no) REFERENCES user_info(userinfo_no) ON UPDATE CASCADE
+    FOREIGN KEY (user_id) REFERENCES user_info(user_id) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARACTER SET UTF8 COLLATE UTF8_GENERAL_CI;
+
+CREATE TABLE if NOT EXISTS order_detail_info(
+    order_detail_id INT(20) AUTO_INCREMENT,
+    order_id INT(20),
+    menu VARCHAR(20),
+    quantity INT(10),
+    PRIMARY KEY (order_detail_id),
+    FOREIGN KEY (order_id) REFERENCES order_info(order_id) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARACTER SET UTF8 COLLATE UTF8_GENERAL_CI;

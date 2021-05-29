@@ -12,7 +12,10 @@
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Order Detail Table</h4>
-                  <p class="card-category">{{ user_number }}번 고객님의 주문 상세 정보 Table</p>
+                  <p class="card-category"><b>{{ user_number }}</b>번 고객님의 주문 상세 정보 Table</p>
+                  <form method="post" action="go_back">
+                    <input type="submit" name="go_back" value= "뒤로가기">
+                  </form>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
@@ -25,7 +28,7 @@
                       <tbody>
                         {% for idx, datas in order_data %}
                         <tr>
-                          <td class="text-primary">{{ idx }}</td>
+                          <td class="text-primary">{{ idx + 1 }}</td>
                           <td>{{ datas[0] }}</td>
                           <td>{{ datas[1] }}</td>
                         </tr>
