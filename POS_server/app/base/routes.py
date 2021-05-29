@@ -147,7 +147,7 @@ def android():
 
     # 회원의 주문 상세 내역 저장
     orderdetail_info_sql = '''INSERT INTO order_detail_info(order_id, menu, quantity) VALUES(%s, %s, %s)'''
-    cursor.execute(orderdetail_info_sql, [orderID, data_dict['name'], data_dict['quantity']])
+    cursor.execute(orderdetail_info_sql, [orderID, data_dict['menu'], data_dict['quantity']])
     conn.commit()
 
     return jsonify(data_dict)
