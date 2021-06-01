@@ -11,3 +11,4 @@ requests
 authlib
 six
 pymysql
+boto3

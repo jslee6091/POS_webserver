@@ -3,6 +3,7 @@ use mydb;
 CREATE TABLE if NOT EXISTS user_info(
     userinfo_no INT(20) AUTO_INCREMENT,
     user_id INT(20) UNIQUE KEY,
+    phone_no INT(30),
     PRIMARY KEY (userinfo_no)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET UTF8 COLLATE UTF8_GENERAL_CI;
 

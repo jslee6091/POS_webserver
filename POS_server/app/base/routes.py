@@ -55,12 +55,14 @@ auth0 = oauth.register(
 )
 
 config = {
-    'host': '172.17.0.3',
+    'host': 'AWS_RDS_ENDPOINT',
     'port': 3306,
-    'user': 'root',
-    'database': 'mydb',
+    'user': 'admin',
+    'database': 'mydatabase',
+    'password': 'silver1212',
     'charset': 'utf8'
 }
+
 
 def requires_auth(f):
     @wraps(f)
@@ -120,17 +122,16 @@ def android():
     data_dict = dict(data_json)
     data_dict['userID'] = int(data_dict['userID'])
     data_dict['quantity'] = int(data_dict['quantity'])
-    print('data_dict : ', data_dict)
+    data_dict['phonenum'] = int(data_dict['phonenum'])
     
     conn = pymysql.connect(**config)
     cursor = conn.cursor()
     
     
     # 회원 정보 먼저 저장 - 이미 있으면 저장 안함
-    userinfo_sql = '''INSERT IGNORE INTO user_info(user_id) VALUES(%s)'''
-    cursor.execute(userinfo_sql, [data_dict['userID']])
+    userinfo_sql = '''INSERT IGNORE INTO user_info(user_id, phone_no) VALUES(%s, %s)'''
+    cursor.execute(userinfo_sql, [data_dict['userID'], data_dict['phonenum']])
     conn.commit()
-    print('============userinfo inserted!==========')
     
     # 회원의 주문 정보 저장 - 현재 주문 내용이 있는 회원만 저장
     # user_id와 state 저장
@@ -143,8 +144,7 @@ def android():
     getorderinfo_sql = '''SELECT order_id FROM order_info WHERE user_id=%s'''
     cursor.execute(getorderinfo_sql, [data_dict['userID']])
     orderID = cursor.fetchone()
-    print('orderID : ', orderID, type(orderID))
-
+    
     # 회원의 주문 상세 내역 저장
     orderdetail_info_sql = '''INSERT INTO order_detail_info(order_id, menu, quantity) VALUES(%s, %s, %s)'''
     cursor.execute(orderdetail_info_sql, [orderID, data_dict['menu'], data_dict['quantity']])

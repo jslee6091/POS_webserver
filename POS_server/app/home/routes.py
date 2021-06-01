@@ -7,13 +7,19 @@ from app.base import constants
 from app.home import blueprint
 from app.base.routes import requires_auth
 from flask import render_template, redirect, url_for, request, session
-import pymysql
+import pymysql, boto3, json
+
+lambda_client = boto3.client('lambda',
+                    region_name='REGION',
+                    aws_access_key_id='AWS_ACCESS_KEY',
+                    aws_secret_access_key='AWS_SECRET_ACCESS_KEY')
 
 config = {
-    'host': '172.17.0.3',
+    'host': 'AWS_RDS_ENDPOINT',
     'port': 3306,
-    'user': 'root',
-    'database': 'mydb',
+    'user': 'admin',
+    'database': 'mydatabase',
+    'password': 'silver1212',
     'charset': 'utf8'
 }
 
@@ -41,15 +47,13 @@ def order_tables():
 def order_detail_tables():
 
     received_data = int(request.form.get('num'))
-    print('received_data : ', received_data, type(received_data))
-
+    
     conn = pymysql.connect(**config)
     cursor = conn.cursor()
     
     sql = '''SELECT menu, quantity FROM order_detail_info WHERE order_id=%s'''
     cursor.execute(sql, [received_data])
     order_data = cursor.fetchall()
-    print('order_data : ', order_data)
     enu_order_data = enumerate(order_data)
     return render_template('order-detail-tables.html', segment='tables', userinfo=session[constants.PROFILE_KEY], order_data=enu_order_data, user_number=received_data)
 
@@ -65,11 +69,18 @@ def state_change():
     cursor.execute(state_sql, [received_data])
     conn.commit()
 
-    '''
-    처리완료 문자 메시지 전송을 위한 코드
-    -> AWS LAMBDA 함수에 신호를 보내는 코드가 들어갈 부분
-    '''
 
+    get_phone_sql = '''SELECT phone_no FROM user_info WHERE user_id = %s'''
+    cursor.execute(get_phone_sql, [received_data])
+    user_phone_no = cursor.fetchone()
+    send_phone_no = '+82' + str(user_phone_no[0])
+    
+    # AWS Lambda 함수에 Event 전달
+    lambda_send = lambda_client.invoke(FunctionName='LAMBDA_FUNCTION_NAME',
+                                        InvocationType='Event',
+                                        Payload=json.dumps({"text": "주문하신 제품이 완료되었습니다.", "number": send_phone_no}))
+
+    
     return redirect(url_for('home_blueprint.order_tables'))
 
 @blueprint.route('/order_delete', methods=['POST'])
