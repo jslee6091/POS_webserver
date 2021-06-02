@@ -55,3 +55,49 @@ $
 $ # Access the dashboard in browser: http://127.0.0.1:5000/
 ```
 
+
+
+### Auth0 Information
+
+- Change the Auth0 Information in `app/base/.env`
+
+- ```bash
+  AUTH0_CLIENT_ID={CLIENT} # Client ID of Auth0 Application 
+  AUTH0_DOMAIN={DOMAIN} # Your Domain
+  AUTH0_CLIENT_SECRET={SECRET} # Client Secret of Auth0 Application
+  AUTH0_CALLBACK_URL=http://ec2-public-ip:5000/callback # Your Public IP address
+  AUTH0_AUDIENCE=https://{DOMAIN}/userinfo # Your Domain
+  ```
+
+
+
+### AWS Information
+
+1. Change the **AWS access key & secret access key** in `app/home/routes.py`
+
+   - ```python
+     lambda_client = boto3.client('lambda',
+                         region_name='REGION',
+                         aws_access_key_id='AWS_ACCESS_KEY',
+                         aws_secret_access_key='AWS_SECRET_ACCESS_KEY')
+     ```
+
+   - You must not push the aws_access_key_id and aws_secret_access_key.
+
+2. Change the AWS RDS ENDPOINT in `app/home/routes.py` and `app/base/routes.py`
+
+   - ```python
+     config = {
+         'host': 'AWS_RDS_ENDPOINT',
+         'port': 3306,
+         'user': 'admin',
+         'database': 'mydatabase',
+         'password': 'silver1212',
+         'charset': 'utf8'
+     }
+     ```
+
+   - You can find the AWS_RDS_ENDPOINT in your AWS RDS.
+
+
+
